@@ -72,8 +72,8 @@
 <body class="bg-gray-900 text-gray-200">
     <header class="bg-gray-800 p-4 text-center relative">
         <h1 class="text-3xl font-bold text-white" id="header-title">Reimagine Truth</h1>
-        <button class="p-2 bg-gray-700 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 absolute top-4 right-4" id="theme-toggle">
-            <i class="fas fa-sun"></i>
+        <button class="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 absolute top-4 right-4 transition-transform transform hover:scale-110" id="theme-toggle">
+            <i class="fas fa-moon"></i>
         </button>
     </header>
 
@@ -109,7 +109,7 @@
         <div class="flex-1">
             <header class="bg-gray-800 text-gray-200 p-4 flex justify-between items-center relative shadow-md">
                 <div class="flex flex-col items-center w-full">
-                    <img alt="A sharply dressed, intense-looking male character" class="w-24 mb-2 fade-in" height="50" src="https://i.ibb.co/p30Q5fs/Leonardo-Kino-XL-A-sharplydressed-intenselooking-male-characte-3.jpg" width="100"/>
+                    <img alt="A sharply dressed, intense-looking male character with a dark suit and piercing eyes" class="w-24 mb-2 fade-in rounded-full shadow-lg transform hover:scale-105 transition-transform" height="50" src="https://i.ibb.co/p30Q5fs/Leonardo-Kino-XL-A-sharplydressed-intenselooking-male-characte-3.jpg" width="100"/>
                     <h1 class="text-2xl font-bold text-center fade-in">Welcome to Reimagine Truth</h1>
                     <p class="text-lg text-center fade-in">Explore the unique stories of our NFT characters.</p>
                 </div>
@@ -169,7 +169,7 @@
                 <section id="news-section" class="p-4 bg-gray-800 text-gray-200 rounded mb-6 fade-in">
                     <h2 class="text-2xl font-bold mb-4"><i class="fas fa-newspaper mr-2"></i>Latest News</h2>
                     <p class="text-lg">Stay tuned for the latest updates and announcements.</p>
-                    <a href="https://reimaginetruth.github.io/blog-system/" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block mt-4">Read More</a>
+                    <a href="news.html" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block mt-4">Read More</a>
                 </section>
             </main>
             <footer class="bg-gray-800 text-gray-200 p-4 text-center shadow-md" id="footer">
@@ -247,7 +247,7 @@
             document.body.classList.toggle('text-gray-200');
             document.body.classList.toggle('text-gray-900');
             document.body.classList.toggle('light-mode');
-            themeToggle.innerHTML = document.body.classList.contains('light-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            themeToggle.innerHTML = document.body.classList.contains('light-mode') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
             document.getElementById('header-title').classList.toggle('text-white');
             document.getElementById('header-title').classList.toggle('text-gray-900');
         });
