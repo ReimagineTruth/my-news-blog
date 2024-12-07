@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/news.js" defer></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white font-sans">
+    <header class="bg-gray-800 p-4 text-white text-center">
+        <h1 class="text-3xl font-bold">Reimagine Truth - News Blog</h1>
+    </header>
+
+    <div class="container mx-auto p-6">
+        <!-- Posting Form -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+            <h3 class="text-xl font-semibold mb-4">Post a News Update</h3>
+            <form id="newsForm">
+                <input class="w-full mb-4 p-2 border border-gray-300 rounded" id="title" placeholder="Enter title" required>
+                <textarea class="w-full mb-4 p-2 border border-gray-300 rounded" id="content" placeholder="Write your content here..." rows="5" required></textarea>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" type="submit">Post</button>
+            </form>
+        </div>
+
+        <!-- News Posts -->
+        <div id="newsPosts" class="space-y-6">
+            <!-- News posts will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 p-4 text-center text-white">
+        <p>© 2024 Reimagine Truth. All rights reserved.</p>
+    </footer>
+</body>
+</html>
