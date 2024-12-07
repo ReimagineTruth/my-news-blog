@@ -61,19 +61,36 @@
             <i class="fas fa-moon dark:hidden"></i>
             <i class="fas fa-sun hidden dark:inline"></i>
         </button>
-        <button class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded lg:hidden" id="menuToggle">
-            <i class="fas fa-bars"></i>
-        </button>
     </header>
-    <nav class="bg-gray-900 p-4 hidden lg:block" id="menu">
-        <ul class="flex flex-col lg:flex-row justify-center space-y-4 lg:space-y-0 lg:space-x-6 text-lg">
-            <li><a class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400" href="https://reimaginetruth.github.io/index.html"><i class="fas fa-home mr-2"></i>Home</a></li>
-            <li><a class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400" href="https://reimaginetruth.github.io/my-assets.html"><i class="fas fa-wallet mr-2"></i>My Assets</a></li>
-            <li><a class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400" href="https://reimaginetruth.github.io/about.html"><i class="fas fa-info-circle mr-2"></i>About</a></li>
-            <li><a class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400" href="https://reimaginetruth.github.io/community.html"><i class="fas fa-users mr-2"></i>Community</a></li>
-            <li><a class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400" href="https://reimaginetruth.github.io/settings.html"><i class="fas fa-cog mr-2"></i>Settings</a></li>
+
+    <!-- Desktop Navigation -->
+    <nav class="bg-gray-900 p-4 hidden md:block">
+        <ul class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6 text-lg">
+            <li><a href="home.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-home mr-2"></i>Home</a></li>
+            <li><a href="my-assets.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-wallet mr-2"></i>My Assets</a></li>
+            <li><a href="about.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+            <li><a href="community.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-users mr-2"></i>Community</a></li>
+            <li><a href="news.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-newspaper mr-2"></i>News</a></li>
+            <li><a href="settings.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-cog mr-2"></i>Settings</a></li>
         </ul>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <button class="md:hidden text-gray-200 p-4 absolute top-4 left-4" id="menu-button" aria-label="Toggle Menu">
+        <span class="fas fa-bars"></span>
+    </button>
+
+    <nav class="bg-gray-900 p-4 md:hidden" id="mobile-menu" style="display: none;">
+        <ul class="flex flex-col space-y-4 text-lg">
+            <li><a href="home.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-home mr-2"></i>Home</a></li>
+            <li><a href="my-assets.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-wallet mr-2"></i>My Assets</a></li>
+            <li><a href="about.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+            <li><a href="community.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-users mr-2"></i>Community</a></li>
+            <li><a href="news.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-newspaper mr-2"></i>News</a></li>
+            <li><a href="settings.html" class="nav-link flex items-center text-gray-300 dark:text-gray-200 hover:text-blue-400"><i class="fas fa-cog mr-2"></i>Settings</a></li>
+        </ul>
+    </nav>
+
     <div class="container mx-auto p-6">
         <!-- Blog Posting Form -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
@@ -102,8 +119,8 @@
         const blogForm = document.getElementById('blogForm');
         const blogPosts = document.getElementById('blogPosts');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const menuToggle = document.getElementById('menuToggle');
-        const menu = document.getElementById('menu');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
         // Handle form submission
         blogForm.addEventListener('submit', async (event) => {
@@ -117,7 +134,7 @@
             newPost.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md';
             newPost.innerHTML = `
                 <div class="flex items-start space-x-4">
-                    <img src="https://i.ibb.co/p30Q5fs/Leonardo-Kino-XL-A-sharplydressed-intenselooking-male-characte-3.jpg" alt="Leonardo-Kino-XL-A-sharplydressed-intenselooking-male-characte-3" class="w-12 h-12 rounded-full">
+                    <img src="https://placehold.co/48x48" alt="Profile picture of the author" class="w-12 h-12 rounded-full">
                     <div>
                         <h3 class="text-xl font-semibold mb-2">${title}</h3>
                         <p class="text-gray-700 dark:text-gray-300">${content}</p>
@@ -169,8 +186,8 @@
         });
 
         // Handle menu toggle
-        menuToggle.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        menuButton.addEventListener('click', () => {
+            mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
         });
 
         // Handle reaction button click
@@ -218,8 +235,8 @@
 
         // Auto-hide menu on click outside
         document.addEventListener('click', (event) => {
-            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-                menu.classList.add('hidden');
+            if (!mobileMenu.contains(event.target) && !menuButton.contains(event.target)) {
+                mobileMenu.style.display = 'none';
             }
         });
     </script>
