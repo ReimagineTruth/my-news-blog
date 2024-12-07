@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My News Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to My News Blog</h1>
+
+    <!-- Sign Up Form -->
+    <div>
+        <h2>Create Account</h2>
+        <form id="signUpForm">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Login Form -->
+    <div>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Logout Button -->
+    <button id="signOutBtn" style="display:none;">Log Out</button>
+
+    <script type="module" src="auth.js"></script>
+</body>
+</html>
 
