@@ -73,3 +73,5 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+import { firebaseConfig } from './firebase-config.js';
+
