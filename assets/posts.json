@@ -1,0 +1,3 @@
+git add .
+git commit -m "Add news.html and scripts"
+git push origin main
