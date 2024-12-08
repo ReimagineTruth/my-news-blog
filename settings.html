@@ -1,14 +1,16 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Settings - Reimagine Truth</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-    <style>
-        body {
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Settings - Reimagine Truth
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
             font-family: 'Roboto', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -53,42 +55,373 @@
             background-color: #ffffff;
             color: #1a202c;
         }
-    </style>
-</head>
-<body class="bg-gray-900 text-gray-200 relative">
+        .light-mode .bg-gray-800 {
+            background-color: #f7fafc;
+        }
+        .light-mode .text-gray-200 {
+            color: #1a202c;
+        }
+        .light-mode .text-gray-400 {
+            color: #4a5568;
+        }
+        .light-mode .bg-gray-900 {
+            background-color: #ffffff;
+        }
+        .dark-mode {
+            background-color: #1a202c;
+            color: #cbd5e0;
+        }
+        .dark-mode .bg-gray-800 {
+            background-color: #2d3748;
+        }
+        .dark-mode .text-gray-200 {
+            color: #cbd5e0;
+        }
+        .dark-mode .text-gray-400 {
+            color: #a0aec0;
+        }
+        .dark-mode .bg-gray-900 {
+            background-color: #1a202c;
+        }
+  </style>
+  <!-- Firebase SDK -->
+  <script type="module">
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, TwitterAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-    <header class="bg-gray-800 p-4 text-center relative">
-        <h1 class="text-3xl font-bold text-white" id="header-title">Settings</h1>
-        <button class="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 absolute top-4 right-4 transition-transform transform hover:scale-110" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </button>
-    </header>
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-auth-domain",
+            projectId: "your-project-id",
+            storageBucket: "your-storage-bucket",
+            messagingSenderId: "your-sender-id",
+            appId: "your-app-id",
+            measurementId: "your-measurement-id"
+        };
 
-    <!-- Mobile Navigation Button -->
-    <button class="md:hidden text-gray-200 p-4 absolute top-4 left-4" id="menu-button" aria-label="Toggle Menu">
-        <span class="fas fa-bars"></span>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            const userElement = document.getElementById("userStatus");
+            const logoutButton = document.getElementById("logoutButton");
+
+            if (user) {
+                userElement.textContent = `Logged in as: ${user.email}`;
+                logoutButton.style.display = "block";
+            } else {
+                userElement.textContent = "Not logged in";
+                logoutButton.style.display = "none";
+            }
+        });
+
+        function logout() {
+            signOut(auth).then(() => {
+                console.log("User signed out");
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Logout error: ", error);
+            });
+        }
+
+        function signInWithGoogle() {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error("Google sign-in error: ", error);
+            });
+        }
+
+        function signInWithFacebook() {
+            const provider = new FacebookAuthProvider();
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error("Facebook sign-in error: ", error);
+            });
+        }
+
+        function signInWithTwitter() {
+            const provider = new TwitterAuthProvider();
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error("Twitter sign-in error: ", error);
+            });
+        }
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const profilePicInput = document.getElementById('profilePicInput');
+            const profilePic = document.getElementById('profilePic');
+
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            themeToggleButton.addEventListener('click', function() {
+                document.body.classList.toggle('light-mode');
+                document.body.classList.toggle('dark-mode');
+                themeToggleButton.innerHTML = document.body.classList.contains('light-mode') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+                document.getElementById('header-title').classList.toggle('text-white');
+                document.getElementById('header-title').classList.toggle('text-gray-900');
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.toggle('text-gray-200');
+                    link.classList.toggle('text-gray-900');
+                });
+            });
+
+            profilePicInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profilePic.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        function showLoading(button) {
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            button.disabled = true;
+        }
+
+        function hideLoading(button, originalText) {
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+
+        function updateProfile() {
+            const button = document.getElementById('updateProfileButton');
+            showLoading(button);
+            setTimeout(() => {
+                alert('Profile updated successfully!');
+                hideLoading(button, 'Update Profile');
+            }, 2000);
+        }
+
+        function changePassword() {
+            const button = document.getElementById('changePasswordButton');
+            showLoading(button);
+            setTimeout(() => {
+                alert('Password changed successfully!');
+                hideLoading(button, 'Change Password');
+            }, 2000);
+        }
+
+        // Christmas Effect
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+
+        setInterval(createSnowflake, 200);
+  </script>
+ </head>
+ <body class="bg-gray-900 text-gray-200 relative dark-mode">
+  <header class="bg-gray-800 p-4 text-center relative">
+   <h1 class="text-3xl font-bold text-white" id="header-title">
+    Settings
+   </h1>
+   <button class="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 absolute top-4 right-4 transition-transform transform hover:scale-110" id="theme-toggle">
+    <i class="fas fa-moon">
+    </i>
+   </button>
+  </header>
+  <!-- Mobile Navigation Button -->
+  <button aria-label="Toggle Menu" class="md:hidden text-gray-200 p-4 absolute top-4 left-4" id="menu-button">
+   <span class="fas fa-bars">
+   </span>
+  </button>
+  <!-- Mobile Navigation -->
+  <nav class="bg-gray-900 p-4 md:hidden hidden" id="mobile-menu">
+   <ul class="flex flex-col space-y-4 text-lg">
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="home.html">
+      <i class="fas fa-home mr-2">
+      </i>
+      Home
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="my-assets.html">
+      <i class="fas fa-wallet mr-2">
+      </i>
+      My Assets
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="about.html">
+      <i class="fas fa-info-circle mr-2">
+      </i>
+      About
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="community.html">
+      <i class="fas fa-users mr-2">
+      </i>
+      Community
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="news.html">
+      <i class="fas fa-newspaper mr-2">
+      </i>
+      News
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="settings.html">
+      <i class="fas fa-cog mr-2">
+      </i>
+      Settings
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <!-- Desktop Navigation -->
+  <nav class="bg-gray-900 p-4 hidden md:block">
+   <ul class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6 text-lg">
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="home.html">
+      <i class="fas fa-home mr-2">
+      </i>
+      Home
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="my-assets.html">
+      <i class="fas fa-wallet mr-2">
+      </i>
+      My Assets
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="about.html">
+      <i class="fas fa-info-circle mr-2">
+      </i>
+      About
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="community.html">
+      <i class="fas fa-users mr-2">
+      </i>
+      Community
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="news.html">
+      <i class="fas fa-newspaper mr-2">
+      </i>
+      News
+     </a>
+    </li>
+    <li>
+     <a class="nav-link flex items-center text-gray-200" href="settings.html">
+      <i class="fas fa-cog mr-2">
+      </i>
+      Settings
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <main class="p-4 fade-in">
+   <div>
+    <p class="text-lg" id="userStatus">
+    </p>
+    <button class="mt-4 bg-red-600 text-white py-2 px-4 rounded hidden" id="logoutButton" onclick="logout()">
+     Logout
     </button>
-
-    <!-- Mobile Navigation -->
-    <nav class="bg-gray-900 p-4 md:hidden" id="mobile-menu" style="display: none;">
-        <ul class="flex flex-col space-y-4 text-lg">
-            <li><a href="home.html" class="nav-link flex items-center"><i class="fas fa-home mr-2"></i>Home</a></li>
-            <li><a href="my-assets.html" class="nav-link flex items-center"><i class="fas fa-wallet mr-2"></i>My Assets</a></li>
-            <li><a href="about.html" class="nav-link flex items-center"><i class="fas fa-info-circle mr-2"></i>About</a></li>
-            <li><a href="community.html" class="nav-link flex items-center"><i class="fas fa-users mr-2"></i>Community</a></li>
-            <li><a href="news.html" class="nav-link flex items-center"><i class="fas fa-newspaper mr-2"></i>News</a></li>
-            <li><a href="settings.html" class="nav-link flex items-center"><i class="fas fa-cog mr-2"></i>Settings</a></li>
-        </ul>
-    </nav>
-
-    <!-- Settings Content -->
-    <main class="p-4 fade-in">
-        <h2 class="text-2xl font-bold mb-4">User Preferences</h2>
-        <p class="text-lg mb-6">Customize your Reimagine Truth experience here.</p>
-    </main>
-
-    <script>
-        // Theme Toggle
+   </div>
+   <!-- Sign-in Providers Section -->
+   <section class="mt-8">
+    <h2 class="text-2xl font-bold">
+     Sign-in Providers
+    </h2>
+    <div class="mt-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+     <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="signInWithGoogle()">
+      <i class="fab fa-google mr-2">
+      </i>
+      Sign in with Google
+     </button>
+     <button class="bg-blue-800 text-white py-2 px-4 rounded" onclick="signInWithFacebook()">
+      <i class="fab fa-facebook mr-2">
+      </i>
+      Sign in with Facebook
+     </button>
+     <button class="bg-blue-400 text-white py-2 px-4 rounded" onclick="signInWithTwitter()">
+      <i class="fab fa-twitter mr-2">
+      </i>
+      Sign in with Twitter
+     </button>
+    </div>
+   </section>
+   <!-- User Profile Section -->
+   <section class="mt-8">
+    <h2 class="text-2xl font-bold">
+     User Profile
+    </h2>
+    <div class="mt-4 flex flex-col items-center">
+     <img alt="User profile picture placeholder" class="w-24 h-24 rounded-full mb-4" height="96" id="profilePic" src="https://storage.googleapis.com/a1aa/image/JpMoUgluUOIfJqeBNpFqgrIn9eiGvOAukDLC89aMZcJsLXxnA.jpg" width="96"/>
+     <input class="hidden" id="profilePicInput" type="file"/>
+     <button class="bg-blue-600 text-white py-2 px-4 rounded mb-4" onclick="document.getElementById('profilePicInput').click()">
+      Upload Profile Picture
+     </button>
+     <label class="block text-sm" for="name">
+      Name
+     </label>
+     <input class="w-full p-2 mt-1 bg-gray-800 text-white rounded" id="name" placeholder="Your Name" type="text"/>
+    </div>
+    <div class="mt-4">
+     <label class="block text-sm" for="email">
+      Email
+     </label>
+     <input class="w-full p-2 mt-1 bg-gray-800 text-white rounded" id="email" placeholder="Your Email" type="email"/>
+    </div>
+    <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded" id="updateProfileButton" onclick="updateProfile()">
+     Update Profile
+    </button>
+   </section>
+   <!-- Password Management Section -->
+   <section class="mt-8">
+    <h2 class="text-2xl font-bold">
+     Password Management
+    </h2>
+    <div class="mt-4">
+     <label class="block text-sm" for="current-password">
+      Current Password
+     </label>
+     <input class="w-full p-2 mt-1 bg-gray-800 text-white rounded" id="current-password" placeholder="Current Password" type="password"/>
+    </div>
+    <div class="mt-4">
+     <label class="block text-sm" for="new-password">
+      New Password
+     </label>
+     <input class="w-full p-2 mt-1 bg-gray-800 text-white rounded" id="new-password" placeholder="New Password" type="password"/>
+    </div>
+    <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded" id="changePasswordButton" onclick="changePassword()">
+     Change Password
+    </button>
+   </section>
+  </main>
+  <footer class="bg-gray-800 p-4 text-center text-gray-200 mt-8">
+   <p>
+    &copy; 2023 Reimagine Truth. All rights reserved.
+   </p>
+  </footer>
+  <script>
+   // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('bg-gray-900');
@@ -102,7 +435,7 @@
         // Mobile Menu Toggle
         document.getElementById('menu-button').addEventListener('click', function() {
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+            mobileMenu.classList.toggle('hidden');
         });
 
         // Christmas Effect
@@ -121,6 +454,32 @@
         }
 
         setInterval(createSnowflake, 200);
-    </script>
-</body>
-</html>
+
+        // Profile Picture Upload
+        const profilePicInput = document.getElementById('profilePicInput');
+        const profilePic = document.getElementById('profilePic');
+
+        profilePicInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePic.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Update Profile
+        function updateProfile() {
+            const button = document.getElementById('updateProfileButton');
+            showLoading(button);
+            setTimeout(() => {
+                alert('Profile updated successfully!');
+                hideLoading(button, 'Update Profile');
+            }, 2000);
+        }
+
+        // Change Password
+        function changePassword() {
+            const button = document.getElementBy
