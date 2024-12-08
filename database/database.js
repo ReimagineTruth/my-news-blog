@@ -1,18 +1,30 @@
 // /src/firebase/database.js
-import { ref, set } from 'firebase/database';
+import { ref, set, push } from 'firebase/database';
 import { database } from './firebaseConfig';
 
-// Function to write a new blog post to Realtime Database
-export const writePost = (postId, title, content) => {
+// Function to add a new blog post
+export const writePost = (title, content) => {
+  const postId = push(ref(database, 'posts')).key; // Auto-generate post ID
   set(ref(database, 'posts/' + postId), {
     title: title,
     content: content,
     timestamp: Date.now()
-  })
-  .then(() => {
+  }).then(() => {
     console.log("Post added successfully!");
-  })
-  .catch((error) => {
+  }).catch((error) => {
     console.error("Error writing post: ", error);
   });
 };
+
+// Function to fetch all blog posts
+export const getPosts = (callback) => {
+  const postsRef = ref(database, 'posts/');
+  postsRef.once('value', snapshot => {
+    if (snapshot.exists()) {
+      callback(snapshot.val());
+    } else {
+      console.log("No posts available.");
+    }
+  });
+};
+
