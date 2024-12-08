@@ -27,4 +27,5 @@ export const getPosts = (callback) => {
     }
   });
 };
-
+writePost
+getPosts
