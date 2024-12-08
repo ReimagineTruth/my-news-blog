@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 
-// Your Firebase configuration
+// Firebase configuration details from Firebase Console
 const firebaseConfig = {
   apiKey: "your-api-key",
   authDomain: "your-auth-domain",
@@ -21,3 +21,4 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 export { database };
+
